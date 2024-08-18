@@ -8,6 +8,7 @@ import { MenuTestPage } from '../pages/MenuTestPage'
 import { getCSSVariableValue } from '../../_metronic/assets/ts/_utils'
 import { WithChildren } from '../../_metronic/helpers'
 import BuilderPageWrapper from '../pages/layout-builder/BuilderPageWrapper'
+import { ManageTheaterWrapper } from '../pages/manageTheater/ManageTheaterWrapper'
 
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
@@ -23,7 +24,7 @@ const PrivateRoutes = () => {
         <Route path='auth/*' element={<Navigate to='/dashboard' />} />
         <Route path='dashboard' element={<DashboardWrapper />} />
         <Route path='movies/*' element={<ManageMoviesWrapper />} />
-        <Route path='theater' element={<DashboardWrapper />} />
+        <Route path='theater/*' element={<ManageTheaterWrapper />} />
         <Route path='analytics' element={<DashboardWrapper />} />
         <Route path='billing' element={<DashboardWrapper />} />
 
