@@ -3,6 +3,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { MasterLayout } from '../../_metronic/layout/MasterLayout'
 import TopBarProgress from 'react-topbar-progress-indicator'
 import { DashboardWrapper } from '../pages/dashboard/DashboardWrapper'
+import { BillingWrapper } from '../pages/Billing/BillingWrapper'
 import { ManageMoviesWrapper } from '../pages/manageMovies/ManageMovies'
 import { MenuTestPage } from '../pages/MenuTestPage'
 import { getCSSVariableValue } from '../../_metronic/assets/ts/_utils'
@@ -25,8 +26,9 @@ const PrivateRoutes = () => {
         <Route path='dashboard' element={<DashboardWrapper />} />
         <Route path='movies/*' element={<ManageMoviesWrapper />} />
         <Route path='theater/*' element={<ManageTheaterWrapper />} />
+        <Route path='billing/*' element={<BillingWrapper />} />
         <Route path='analytics' element={<DashboardWrapper />} />
-        <Route path='billing' element={<DashboardWrapper />} />
+        
 
         <Route
           path='crafted/account/*'

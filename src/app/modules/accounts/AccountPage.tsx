@@ -4,6 +4,7 @@ import {PageLink, PageTitle} from '../../../_metronic/layout/core'
 import {Overview} from './components/Overview'
 import {Settings} from './components/settings/Settings'
 import {AccountHeader} from './AccountHeader'
+import { PersonalHeader } from './PersonalHeader'
 
 const accountBreadCrumbs: Array<PageLink> = [
   {
@@ -26,7 +27,7 @@ const AccountPage: React.FC = () => {
       <Route
         element={
           <>
-            <AccountHeader />
+            <PersonalHeader />
             <Outlet />
           </>
         }

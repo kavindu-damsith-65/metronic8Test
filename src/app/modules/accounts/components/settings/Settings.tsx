@@ -11,9 +11,6 @@ export function Settings() {
     <>
       <ProfileDetails />
       <SignInMethod />
-      <ConnectedAccounts />
-      <EmailPreferences />
-      <Notifications />
       <DeactivateAccount />
     </>
   )
