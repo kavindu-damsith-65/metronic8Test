@@ -6,7 +6,8 @@ import {PrivateRoutes} from './PrivateRoutes'
 import {ErrorsPage} from '../modules/errors/ErrorsPage'
 import {Logout, AuthPage, useAuth} from '../modules/auth'
 import {App} from '../App'
-
+import { UserRoutes } from './UserRoutes'
+import { default as UserApp } from '../user/App';
 
 const AppRoutes: FC = () => {
   // const {currentUser} = useAuth()
@@ -17,8 +18,10 @@ const AppRoutes: FC = () => {
         <Route element={<App />}>
           <Route path='error/*' element={<ErrorsPage />} />
           <Route path='logout' element={<Logout />} />
+          <Route path='/user/*' element={<UserApp />}/>
           {/* {currentUser ? ( */}
             <>
+             
               <Route path='/*' element={<PrivateRoutes />} />
               <Route index element={<Navigate to='/dashboard' />} />
             </>
