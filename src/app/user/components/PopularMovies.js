@@ -8,7 +8,7 @@ export default function PopularMovies() {
   const [popularMovies, setPopularMovies] = useState(null);
 
   useEffect(() => {
-    reqSend.defaultReq(
+    reqSend.defaultReqPost(
       "POST",
       "films/get-film-details",
       {

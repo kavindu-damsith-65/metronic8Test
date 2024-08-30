@@ -8,14 +8,7 @@ const Step4: FC = () => {
       <div className='pb-10 pb-lg-15'>
         <h2 className='fw-bolder text-dark'>Billing Details</h2>
 
-        <div className='text-gray-400 fw-bold fs-6'>
-          If you need more info, please check out
-          <a href='/dashboard' className='text-primary fw-bolder'>
-            {' '}
-            Help Page
-          </a>
-          .
-        </div>
+      
       </div>
 
       <div className='d-flex flex-column mb-7 fv-row'>
@@ -71,12 +64,12 @@ const Step4: FC = () => {
 
       <div className='row mb-10'>
         <div className='col-md-8 fv-row'>
-          <label className='required fs-6 fw-bold form-label mb-2'>Expiration Date</label>
+          <label className='required fs-6 fw-bold form-label mb-2'>Expiration Date (MM/YYYY)</label>
 
           <div className='row fv-row'>
             <div className='col-6'>
               <Field as='select' name='cardExpiryMonth' className='form-select form-select-solid'>
-                <option></option>
+                <option>MM</option>
                 <option value='1'>1</option>
                 <option value='2'>2</option>
                 <option value='3'>3</option>
@@ -97,18 +90,15 @@ const Step4: FC = () => {
 
             <div className='col-6'>
               <Field as='select' name='cardExpiryYear' className='form-select form-select-solid'>
-                <option></option>
-                <option value='2021'>2021</option>
-                <option value='2022'>2022</option>
-                <option value='2023'>2023</option>
-                <option value='2024'>2024</option>
-                <option value='2025'>2025</option>
-                <option value='2026'>2026</option>
-                <option value='2027'>2027</option>
-                <option value='2028'>2028</option>
-                <option value='2029'>2029</option>
-                <option value='2030'>2030</option>
-                <option value='2031'>2031</option>
+              <option>YYYY</option>
+                { Array.from({ length: 2050 - 2024 + 1 }, (_, i) => 2024 + i).map((year)=>{
+                  return(
+                   <>
+                    <option value={year} key={year}>{year}</option>
+                   </>
+                  )
+                })}
+                
               </Field>
               <div className='text-danger mt-2'>
                 <ErrorMessage name='cardExpiryYear' />

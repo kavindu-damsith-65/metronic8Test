@@ -8,8 +8,25 @@ import {KTIcon} from '../../../../_metronic/helpers'
 import {StepperComponent} from '../../../../_metronic/assets/ts/components'
 import {Form, Formik, FormikValues} from 'formik'
 import {createAccountSchemas, ICreateAccount, inits} from './CreateAccountWizardHelper'
+import { useLocation } from 'react-router-dom';
+import { defaultReqPost } from '../../../request/main'
+import { useNavigate } from 'react-router-dom'
+
+
+
+interface NavigationState {
+  data: any; 
+}
 
 const Horizontal: FC = () => {
+  const navigate= useNavigate()
+  const location = useLocation();
+  const state = location.state as NavigationState; 
+  const data = state?.data; 
+  
+  
+
+
   const stepperRef = useRef<HTMLDivElement | null>(null)
   const stepper = useRef<StepperComponent | null>(null)
   const [currentSchema, setCurrentSchema] = useState(createAccountSchemas[0])
@@ -32,7 +49,8 @@ const Horizontal: FC = () => {
     setSubmitButton(stepper.current.currentStepIndex === stepper.current.totalStepsNumber)
   }
 
-  const submitStep = (values: ICreateAccount, actions: FormikValues) => {
+  const submitStep = async (values: ICreateAccount, actions: FormikValues) => {
+    
     if (!stepper.current) {
       return
     }
@@ -40,8 +58,37 @@ const Horizontal: FC = () => {
     if (stepper.current.currentStepIndex !== stepper.current.totalStepsNumber) {
       stepper.current.goNext()
     } else {
-      stepper.current.goto(1)
-      actions.resetForm()
+
+      // console.log(values)
+      try {
+        const response = await defaultReqPost(
+          {
+            businessName: values.businessName,
+            businessDescription:values.businessDescription,
+            image: "",
+            businessAddress:values.businessAddress,
+            businessLocation:values.businessLocation,
+            businessCountry: values.businessCountry,
+            businessEmail:values.businessEmail,
+            firstName: data.firstname,
+            lastName: data.lastname,
+            email: data.email,
+            password: data.password,
+            cardNumber:values.cardNumber,
+            nameOnCard: values.nameOnCard,
+            cardCvv: values.cardCvv,
+            cardExpiryMonth: values.cardExpiryMonth,
+            cardExpiryYear: values.cardExpiryYear
+        },"user/theater-admin-sin-up");
+        navigate('/auth/login');
+        
+      }catch (error) {
+        stepper.current.goto(1)
+        actions.resetForm()
+        navigate('/auth/registration');
+      }
+      
+      
     }
 
     setSubmitButton(stepper.current.currentStepIndex === stepper.current.totalStepsNumber)
@@ -67,17 +114,10 @@ const Horizontal: FC = () => {
         >
           <div className='stepper-nav mb-5'>
             <div className='stepper-item current' data-kt-stepper-element='nav'>
-              <h3 className='stepper-title'>Account Type</h3>
-            </div>
-
-            <div className='stepper-item' data-kt-stepper-element='nav'>
-              <h3 className='stepper-title'>Account Info</h3>
-            </div>
-
-            <div className='stepper-item' data-kt-stepper-element='nav'>
               <h3 className='stepper-title'>Business Info</h3>
             </div>
 
+           
             <div className='stepper-item' data-kt-stepper-element='nav'>
               <h3 className='stepper-title'>Billing Details</h3>
             </div>
@@ -91,15 +131,7 @@ const Horizontal: FC = () => {
             {() => (
               <Form className='mx-auto mw-600px w-100 pt-15 pb-10' id='kt_create_account_form'>
                 <div className='current' data-kt-stepper-element='content'>
-                  <Step1 />
-                </div>
-
-                <div data-kt-stepper-element='content'>
-                  <Step2 />
-                </div>
-
-                <div data-kt-stepper-element='content'>
-                  <Step3 />
+                <Step3 />
                 </div>
 
                 <div data-kt-stepper-element='content'>
@@ -127,7 +159,7 @@ const Horizontal: FC = () => {
                     <button type='submit' className='btn btn-lg btn-primary me-3'>
                       <span className='indicator-label'>
                         {!isSubmitButton && 'Continue'}
-                        {isSubmitButton && 'Submit'}
+                        {isSubmitButton && 'Finish'}
                         <KTIcon iconName='arrow-right' className='fs-3 ms-2 me-0' />
                       </span>
                     </button>

@@ -1,10 +1,10 @@
-import {useAuth} from '../../../../app/modules/auth'
+// import {useAuth} from '../../../../app/modules/auth'
 import {KTIcon, toAbsoluteUrl} from '../../../helpers'
 import {HeaderUserMenu, Search} from '../../../partials'
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 const AsideToolbar = () => {
-  const {currentUser} = useAuth()
+  // const {currentUser} = useAuth()
 
   return (
     <>

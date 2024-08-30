@@ -1,14 +1,15 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {useState, useEffect} from 'react'
-import {useFormik} from 'formik'
+import { useState, useEffect } from 'react'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import clsx from 'clsx'
-import {getUserByToken, register} from '../core/_requests'
-import {Link} from 'react-router-dom'
-import {toAbsoluteUrl} from '../../../../_metronic/helpers'
-import {PasswordMeterComponent} from '../../../../_metronic/assets/ts/components'
-import {useAuth} from '../core/Auth'
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+import { toAbsoluteUrl } from '../../../../_metronic/helpers'
+import { PasswordMeterComponent } from '../../../../_metronic/assets/ts/components'
+import { defaultReqPost } from '../../../request/main'
+
 
 const initialValues = {
   firstname: '',
@@ -46,31 +47,25 @@ const registrationSchema = Yup.object().shape({
 })
 
 export function Registration() {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false)
-  const {saveAuth, setCurrentUser} = useAuth()
+  
   const formik = useFormik({
     initialValues,
     validationSchema: registrationSchema,
-    onSubmit: async (values, {setStatus, setSubmitting}) => {
+    onSubmit: async (values, { setStatus, setSubmitting }) => {
       setLoading(true)
       try {
-        const {data: auth} = await register(
-          values.email,
-          values.firstname,
-          values.lastname,
-          values.password,
-          values.changepassword
-        )
-        saveAuth(auth)
-        const {data: user} = await getUserByToken(auth.api_token)
-        setCurrentUser(user)
-      } catch (error) {
-        console.error(error)
-        saveAuth(undefined)
-        setStatus('The registration details is incorrect')
+        const response = await defaultReqPost({ email: values.email },'user/theater-admin-check');
+        navigate('/auth/theater-details', { state: { data: values } });
+        
+      }catch (error) {
+       
         setSubmitting(false)
         setLoading(false)
       }
+
+    
     },
   })
 
@@ -91,58 +86,10 @@ export function Registration() {
         <h1 className='text-dark fw-bolder mb-3'>Sign Up</h1>
         {/* end::Title */}
 
-        <div className='text-gray-500 fw-semibold fs-6'>Your Social Campaigns</div>
       </div>
       {/* end::Heading */}
 
-      {/* begin::Login options */}
-      <div className='row g-3 mb-9'>
-        {/* begin::Col */}
-        <div className='col-md-6'>
-          {/* begin::Google link */}
-          <a
-            href='#'
-            className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'
-          >
-            <img
-              alt='Logo'
-              src={toAbsoluteUrl('/media/svg/brand-logos/google-icon.svg')}
-              className='h-15px me-3'
-            />
-            Sign in with Google
-          </a>
-          {/* end::Google link */}
-        </div>
-        {/* end::Col */}
 
-        {/* begin::Col */}
-        <div className='col-md-6'>
-          {/* begin::Google link */}
-          <a
-            href='#'
-            className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'
-          >
-            <img
-              alt='Logo'
-              src={toAbsoluteUrl('/media/svg/brand-logos/apple-black.svg')}
-              className='theme-light-show h-15px me-3'
-            />
-            <img
-              alt='Logo'
-              src={toAbsoluteUrl('/media/svg/brand-logos/apple-black-dark.svg')}
-              className='theme-dark-show h-15px me-3'
-            />
-            Sign in with Apple
-          </a>
-          {/* end::Google link */}
-        </div>
-        {/* end::Col */}
-      </div>
-      {/* end::Login options */}
-
-      <div className='separator separator-content my-14'>
-        <span className='w-125px text-gray-500 fw-semibold fs-7'>Or with email</span>
-      </div>
 
       {formik.status && (
         <div className='mb-lg-15 alert alert-danger'>
@@ -215,7 +162,7 @@ export function Registration() {
           {...formik.getFieldProps('email')}
           className={clsx(
             'form-control bg-transparent',
-            {'is-invalid': formik.touched.email && formik.errors.email},
+            { 'is-invalid': formik.touched.email && formik.errors.email },
             {
               'is-valid': formik.touched.email && !formik.errors.email,
             }
@@ -336,6 +283,35 @@ export function Registration() {
       </div>
       {/* end::Form group */}
 
+      <div className='separator separator-content my-14 d-flex'>
+        <span className='w-200px text-gray-500 fw-semibold fs-7'>Or with Google</span>
+      </div>
+
+
+      {/* begin::Login options */}
+      <div className='row g-3 mb-9'>
+        {/* begin::Col */}
+        <div className='col-12'>
+          {/* begin::Google link */}
+          <a
+            href='#'
+            className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'
+          >
+            <img
+              alt='Logo'
+              src={toAbsoluteUrl('/media/svg/brand-logos/google-icon.svg')}
+              className='h-15px me-3'
+            />
+            Sign in with Google
+          </a>
+          {/* end::Google link */}
+        </div>
+        {/* end::Col */}
+
+
+      </div>
+      {/* end::Login options */}
+
       {/* begin::Form group */}
       <div className='text-center'>
         <button
@@ -344,9 +320,9 @@ export function Registration() {
           className='btn btn-lg btn-primary w-100 mb-5'
           disabled={formik.isSubmitting || !formik.isValid || !formik.values.acceptTerms}
         >
-          {!loading && <span className='indicator-label'>Submit</span>}
+          {!loading && <span className='indicator-label'>Next</span>}
           {loading && (
-            <span className='indicator-progress' style={{display: 'block'}}>
+            <span className='indicator-progress' style={{ display: 'block' }}>
               Please wait...{' '}
               <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
             </span>
@@ -363,6 +339,11 @@ export function Registration() {
         </Link>
       </div>
       {/* end::Form group */}
+
+
+
+
+
     </form>
   )
 }

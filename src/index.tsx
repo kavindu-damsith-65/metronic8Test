@@ -11,18 +11,18 @@ import './_metronic/assets/keenicons/duotone/style.css'
 import './_metronic/assets/keenicons/outline/style.css'
 import './_metronic/assets/keenicons/solid/style.css'
 import './_metronic/assets/custom/custom.css'
-/**
- * TIP: Replace this style import with rtl styles to enable rtl mode
- *
- * import './_metronic/assets/css/style.rtl.css'
- **/
+
+
 import './_metronic/assets/sass/style.scss'
 import './_metronic/assets/sass/plugins.scss'
 import './_metronic/assets/sass/style.react.scss'
+import 'react-toastify/dist/ReactToastify.css';
 import {AppRoutes} from './app/routing/AppRoutes'
-import {AuthProvider, setupAxios} from './app/modules/auth'
 
-setupAxios(axios)
+
+import { ToastContainer, toast } from 'react-toastify';
+
+// setupAxios(axios)
 Chart.register(...registerables)
 
 const queryClient = new QueryClient()
@@ -31,9 +31,10 @@ if (container) {
   createRoot(container).render(
     <QueryClientProvider client={queryClient}>
       <MetronicI18nProvider>
-        <AuthProvider>
+        {/* <AuthProvider> */}
           <AppRoutes />
-        </AuthProvider>
+          <ToastContainer />
+        {/* </AuthProvider> */}
       </MetronicI18nProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

@@ -1,14 +1,16 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {FC} from 'react'
-import {useLayout} from '../../core'
-import {KTIcon} from '../../../helpers'
-import {AsideMenu} from './AsideMenu'
-import {AsideToolbar} from './AsideToolbar'
+import { FC } from 'react'
+import { useLayout } from '../../core'
+import { KTIcon } from '../../../helpers'
+import { AsideMenu } from './AsideMenu'
+import { AsideToolbar } from './AsideToolbar'
+import { useNavigate } from 'react-router-dom'
+
 
 const AsideDefault: FC = () => {
-  const {classes} = useLayout()
-
+  const { classes } = useLayout()
+  const navigate = useNavigate()
   return (
     <div
       id='kt_aside'
@@ -33,16 +35,25 @@ const AsideDefault: FC = () => {
       {/* end::Aside menu */}
 
       {/* begin::Footer */}
-      <div className='aside-footer flex-column-auto py-5' id='kt_aside_footer'>
+      <div
+
+        className='aside-footer flex-column-auto py-5' id='kt_aside_footer'>
         <a
+          onClick={() => {
+            localStorage.removeItem('auth');
+            navigate("/auth/login")
+
+          }}
           className='btn  btn-custom btn-primary w-100'
           target='_blank'
-          href={process.env.REACT_APP_PREVIEW_DOCS_URL}
+
           data-bs-toggle='tooltip'
           data-bs-trigger='hover'
           data-bs-dismiss-='click'
         >
-          <span className='btn-label text-danger'>Sign Out</span>
+          <span
+
+            className='btn-label text-danger'>Sign Out</span>
           <span className=' btn-icon fs-2'>
             <KTIcon iconName='document' />
           </span>
@@ -53,4 +64,4 @@ const AsideDefault: FC = () => {
   )
 }
 
-export {AsideDefault}
+export { AsideDefault }

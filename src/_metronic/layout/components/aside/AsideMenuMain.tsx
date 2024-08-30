@@ -28,18 +28,18 @@ export function AsideMenuMain() {
         <AsideMenuItem to='/crafted/account/settings' title='Settings' hasBullet={true} />
       </AsideMenuItemWithSub>
 
-      <AsideMenuItemWithSub to='/apps/chat' title='Chat' icon='message-text-2'>
+      {/* <AsideMenuItemWithSub to='/apps/chat' title='Chat' icon='message-text-2'>
         <AsideMenuItem to='/apps/chat/private-chat' title='Private Chat' hasBullet={true} />
         <AsideMenuItem to='/apps/chat/group-chat' title='Group Chart' hasBullet={true} />
         <AsideMenuItem to='/apps/chat/drawer-chat' title='Drawer Chart' hasBullet={true} />
-      </AsideMenuItemWithSub>
+      </AsideMenuItemWithSub> */}
 
 
 
 
 
 
-      <div className='menu-item'>
+      {/* <div className='menu-item'>
         <div className='menu-content pt-8 pb-2'>
           <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Crafted</span>
         </div>
@@ -105,7 +105,7 @@ export function AsideMenuMain() {
           </span>
           <span className='menu-title'>Changelog {process.env.REACT_APP_VERSION}</span>
         </a>
-      </div>
+      </div> */}
     </>
   )
 }

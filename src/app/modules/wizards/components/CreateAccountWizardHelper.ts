@@ -1,13 +1,11 @@
 import * as Yup from 'yup'
 
 export interface ICreateAccount {
-  accountType: string
-  accountTeamSize: string
-  accountName: string
-  accountPlan: string
+ 
   businessName: string
-  businessDescriptor: string
-  businessType: string
+  businessAddress: string
+  businessLocation: string,
+  businessCountry:string,
   businessDescription: string
   businessEmail: string
   nameOnCard: string
@@ -19,16 +17,12 @@ export interface ICreateAccount {
 }
 
 const createAccountSchemas = [
-  Yup.object({
-    accountType: Yup.string().required().label('Account Type'),
-  }),
-  Yup.object({
-    accountName: Yup.string().required().label('Account Name'),
-  }),
+  
   Yup.object({
     businessName: Yup.string().required().label('Business Name'),
-    businessDescriptor: Yup.string().required().label('Shortened Descriptor'),
-    businessType: Yup.string().required().label('Corporation Type'),
+    businessAddress: Yup.string().required().label('Shortened Descriptor'),
+    businessLocation: Yup.string().required().label('Corporation Type'),
+    businessCountry: Yup.string().required().label('Corporation Type'),
     businessEmail: Yup.string().required().label('Contact Email'),
   }),
   Yup.object({
@@ -41,20 +35,18 @@ const createAccountSchemas = [
 ]
 
 const inits: ICreateAccount = {
-  accountType: 'personal',
-  accountTeamSize: '50+',
-  accountName: '',
-  accountPlan: '1',
-  businessName: 'Keenthemes Inc.',
-  businessDescriptor: 'KEENTHEMES',
-  businessType: '1',
+ 
+  businessName: '',
+  businessAddress: '',
+  businessLocation: '5',
+  businessCountry: 'LK',
   businessDescription: '',
-  businessEmail: 'corp@support.com',
-  nameOnCard: 'Max Doe',
-  cardNumber: '4111 1111 1111 1111',
-  cardExpiryMonth: '1',
-  cardExpiryYear: '2025',
-  cardCvv: '123',
+  businessEmail: '',
+  nameOnCard: '',
+  cardNumber: '',
+  cardExpiryMonth: '',
+  cardExpiryYear: '',
+  cardCvv: '',
   saveCard: '1',
 }
 

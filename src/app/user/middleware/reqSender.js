@@ -5,7 +5,7 @@ import { Host } from "../server";
 const Toast = Swal.mixin({ toast: true, position: 'top-end', showConfirmButton: false, timer: 2500, timerProgressBar: true, })
 
 
-export function defaultReq(method,url,data,callback1=null,callback2=null,callback3=null){
+export function defaultReqPost(method,url,data,callback1=null,callback2=null,callback3=null){
     
     var options = {
         method:method,

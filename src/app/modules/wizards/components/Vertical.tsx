@@ -55,7 +55,7 @@ const Vertical = () => {
   return (
     <div
       ref={stepperRef}
-      className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid'
+      className='stepper stepper-pills stepper-column d-flex flex-column flex-xl-row flex-row-fluid align-items-center'
       id='kt_create_account_stepper'
     >
       {/* begin::Aside*/}

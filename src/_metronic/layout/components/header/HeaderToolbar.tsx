@@ -1,13 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import noUiSlider from 'nouislider'
-import {useLayout} from '../../core'
-import {KTIcon} from '../../../helpers'
-import {DefaultTitle} from './page-title/DefaultTitle'
-import {ThemeModeSwitcher} from '../../../partials'
+import { useLayout } from '../../core'
+import { KTIcon } from '../../../helpers'
+import { DefaultTitle } from './page-title/DefaultTitle'
+import { ThemeModeSwitcher } from '../../../partials'
+import { Link } from 'react-router-dom'
 
 const HeaderToolbar = () => {
-  const {classes} = useLayout()
+  const { classes } = useLayout()
   const [status, setStatus] = useState<string>('1')
 
   useEffect(() => {
@@ -88,16 +89,16 @@ const HeaderToolbar = () => {
         <div className='d-flex align-items-stretch overflow-auto pt-3 pt-lg-0'>
           {/* begin::Action wrapper */}
           <div className='d-flex align-items-center'>
-           
+
           </div>
           {/* end::Action wrapper */}
 
-          
+
 
           {/* begin::Action wrapper */}
           <div className='d-flex align-items-center'>
             {/* begin::Label */}
-            <span className='fs-7 text-gray-700 fw-bolder pe-3 d-none d-xxl-block'>
+            <span className='fs-7 text-gray-700 fw-bolder  d-none d-xxl-block'>
               Quick Tools:
             </span>
             {/* end::Label */}
@@ -105,35 +106,11 @@ const HeaderToolbar = () => {
             {/* begin::Actions */}
             <div className='d-flex'>
               {/* begin::Action */}
-              <a
-                href='#'
-                className='btn btn-sm btn-icon btn-icon-muted btn-active-icon-primary'
-                data-bs-toggle='modal'
-                data-bs-target='#kt_modal_invite_friends'
-              >
-                <KTIcon iconName='files' className='fs-1' />
-              </a>
-              {/* end::Action */}
+              <Link to='/crafted/account/settings' className='btn btn-sm btn-icon btn-icon-muted btn-active-icon-primary'>
+              <KTIcon iconName='setting' className='fs-1' />
+              </Link>
+             
 
-              {/* begin::Notifications */}
-              <div className='d-flex align-items-center'>
-                {/* begin::Menu- wrapper */}
-                <a href='#' className='btn btn-sm btn-icon btn-icon-muted btn-active-icon-primary'>
-                  <KTIcon iconName='add-files' className='fs-1' />
-                </a>
-                {/* end::Menu wrapper */}
-              </div>
-              {/* end::Notifications */}
-
-              {/* begin::Quick links */}
-              <div className='d-flex align-items-center'>
-                {/* begin::Menu wrapper */}
-                <a href='#' className='btn btn-sm btn-icon btn-icon-muted btn-active-icon-primary'>
-                  <KTIcon iconName='file-up' className='fs-1' />
-                </a>
-                {/* end::Menu wrapper */}
-              </div>
-              {/* end::Quick links */}
 
               {/* begin::Theme mode */}
               <div className='d-flex align-items-center'>
@@ -151,4 +128,4 @@ const HeaderToolbar = () => {
   )
 }
 
-export {HeaderToolbar}
+export { HeaderToolbar }

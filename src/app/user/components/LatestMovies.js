@@ -6,7 +6,7 @@ export default function LatestMovies() {
   const [latestMovies, setLatestMovies] = useState(null);
 
   useEffect(() => {
-    reqSend.defaultReq(
+    reqSend.defaultReqPost(
       "POST",
       "films/get-film-details",
       {

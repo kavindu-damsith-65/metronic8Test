@@ -3,6 +3,9 @@ import { KTIcon } from '../../../_metronic/helpers'
 import { Dropdown1 } from '../../../_metronic/partials'
 import { TablesWidget14 } from '../../../_metronic/partials/widgets'
 import React from 'react'
+import { defaultReqPost } from '../../request/main'
+import { useEffect,useState } from 'react'
+
 
 
 const DataRecurrent = () => {
@@ -227,6 +230,29 @@ const DataSingle = () => {
 
 
 const ScheduleMovie = () => {
+
+   const fetchData= async()=>{
+    try {
+      const response = await defaultReqPost( 
+        {
+          theaterId:"5c86b633-3db4-4c9a-bbeb-c1faec0f956f",
+          filmDetailsId:"3abb4de3-0315-498d-b7f6-bbac2bd054a0",
+          timeZone:Intl.DateTimeFormat().resolvedOptions().timeZone
+        }
+      , 'films/get-schedule-film');
+
+       console.log(response.data)
+
+    } catch (error: any) {
+      console.log(error.response.data.error)
+    }
+   }
+
+
+   useEffect(() => {
+     fetchData()
+  }, []);
+  
   return (
     <>
       <Model/>
