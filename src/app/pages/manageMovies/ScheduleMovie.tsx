@@ -4,98 +4,102 @@ import { Dropdown1 } from '../../../_metronic/partials'
 import { TablesWidget14 } from '../../../_metronic/partials/widgets'
 import React from 'react'
 import { defaultReqPost } from '../../request/main'
-import { useEffect,useState } from 'react'
+import { useEffect, useState } from 'react'
 
 
 
-const DataRecurrent = () => {
+const DataRecurrent = (recurrentFilmsData: any) => {
+
+  const recurrentTableData = recurrentFilmsData.map((film: any) => ({
+    day: (
+      <span className='text-dark fw-semibold text-dark d-block fs-7'>
+        {film.day}
+      </span>
+    ),
+    time: (
+      <span className='text-dark fw-semibold text-dark d-block fs-7'>
+        {new Date(`1970-01-01T${film.time}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+      </span>
+    ),
+    from: (
+      <span className='text-dark fw-semibold text-dark d-block fs-7'>
+        {new Date(film.from).toLocaleDateString()}
+      </span>
+    ),
+    till: (
+      <span className='text-dark fw-semibold text-dark d-block fs-7'>
+        {new Date(film.till).toLocaleDateString()}
+      </span>
+    ),
+    actions: (
+      <div className='d-flex justify-content-start flex-shrink-0'>
+        <a
+          href='#'
+          className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
+        >
+          <KTIcon iconName='pencil' className='fs-3' />
+        </a>
+        <a
+          href='#'
+          className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
+        >
+          <KTIcon iconName='trash' className='fs-3' />
+        </a>
+      </div>
+    ),
+  }));
+
+  return {
+    title: "Recurrent Schedulings",
+    subTitle: `Total ${recurrentFilmsData.length} Schedulings`,
+    buttonTitle: "Add New",
+    table: {
+      keys: ["day", "time", "from", "till", "actions"],
+      headings: ["Day", "Time", "From", "Till", "Actions"],
+      data: recurrentTableData,
+    },
+  };
+};
+
+
+const DataSingle = (oneTimeFilmsData: any) => {
   // text-muted
-  return (
-    {
-      title: "Recurrent Schedulings",
-      subTitle: "Total 20 Schedulings",
-      buttonTitle: "Add New",
-      table: {
-        keys: ["day", "time", "from", "till", "actions"],
-        headings: ["Day", "Time", "From", "Till", "Actions"],
-        data: [
-          {
-            day: <>
-              <span className='text-dark fw-semibold text-dark d-block fs-7'>
-                Sun,Mon<br />Tue,Wed<br />Thur,Fri
-              </span>
-            </>,
-            time: <span className='text-dark fw-semibold text-dark d-block fs-7'>
-              12.30 PM
-            </span>,
-            from: <span className='text-dark fw-semibold text-dark d-block fs-7'>
-              2024.07.25
-            </span>,
-            till: <span className='text-dark fw-semibold text-dark d-block fs-7'>
-              2024.08.25
-            </span>,
-            actions: <>
-              <div className='d-flex justify-content-start flex-shrink-0'>
-                <a
-                  href='#'
-                  className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-                >
-                  <KTIcon iconName='pencil' className='fs-3' />
-                </a>
-                <a
-                  href='#'
-                  className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
-                >
-                  <KTIcon iconName='trash' className='fs-3' />
-                </a>
-              </div>
-            </>
-          },
 
-          {
-            day: <>
-              <span className='text-dark fw-semibold text-dark d-block fs-7'>
-                Sun,Fri
-              </span>
-            </>,
-            time: <span className='text-dark fw-semibold text-dark d-block fs-7'>
-              12.30 PM
-            </span>,
-            from: <span className='text-dark fw-semibold text-dark d-block fs-7'>
-              2024.07.25
-            </span>,
-            till: <span className='text-dark fw-semibold text-dark d-block fs-7'>
-              2024.08.25
-            </span>,
-            actions: <>
-              <div className='d-flex justify-content-start flex-shrink-0'>
-                <a
-                  href='#'
-                  className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-                >
-                  <KTIcon iconName='pencil' className='fs-3' />
-                </a>
-                <a
-                  href='#'
-                  className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
-                >
-                  <KTIcon iconName='trash' className='fs-3' />
-                </a>
-              </div>
-            </>
-          }
-        ]
-      },
+  const oneTimeDataTable = oneTimeFilmsData.map((film: any) => ({
+    type: (
+      <span className='text-dark fw-semibold text-dark d-block fs-7'>
+        Single
+      </span>
+    ),
+    date: (
+      <span className='text-dark fw-semibold text-dark d-block fs-7'>
+        {film.date}
+      </span>
+    ),
+    time: (
+      <span className='text-dark fw-semibold text-dark d-block fs-7'>
+        {new Date(`1970-01-01T${film.time}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+      </span>
+    ),
+    actions: (
+      <div className='d-flex justify-content-start flex-shrink-0'>
+        <a
+          href='#'
+          className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
+        >
+          <KTIcon iconName='pencil' className='fs-3' />
+        </a>
+        <a
+          href='#'
+          className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
+        >
+          <KTIcon iconName='trash' className='fs-3' />
+        </a>
+      </div>
+    ),
 
+  }));
 
-
-    }
-  )
-}
-
-
-const DataSingle = () => {
-  // text-muted
   return (
     {
       title: "One Time Schedulings",
@@ -104,122 +108,7 @@ const DataSingle = () => {
       table: {
         keys: ["type", "date", "time", "actions"],
         headings: ["Type", "Date", "Time", "Actions"],
-        data: [
-          {
-            type: <span className='text-dark fw-semibold text-dark d-block fs-7'>
-              Single
-            </span>,
-            time: <span className='text-dark fw-semibold text-dark d-block fs-7'>
-              12.30 PM
-            </span>,
-            date: <span className='text-dark fw-semibold text-dark d-block fs-7'>
-              2024.07.25
-            </span>,
-
-            actions: <>
-              <div className='d-flex justify-content-start flex-shrink-0'>
-                <a
-                  href='#'
-                  className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-                >
-                  <KTIcon iconName='pencil' className='fs-3' />
-                </a>
-                <a
-                  href='#'
-                  className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
-                >
-                  <KTIcon iconName='trash' className='fs-3' />
-                </a>
-              </div>
-            </>
-          },
-          {
-            type: <span className='text-dark fw-semibold text-dark d-block fs-7'>
-              Single
-            </span>,
-            time: <span className='text-dark fw-semibold text-dark d-block fs-7'>
-              12.30 PM
-            </span>,
-            date: <span className='text-dark fw-semibold text-dark d-block fs-7'>
-              2024.07.25
-            </span>,
-
-            actions: <>
-              <div className='d-flex justify-content-start flex-shrink-0'>
-                <a
-                  href='#'
-                  className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-                >
-                  <KTIcon iconName='pencil' className='fs-3' />
-                </a>
-                <a
-                  href='#'
-                  className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
-                >
-                  <KTIcon iconName='trash' className='fs-3' />
-                </a>
-              </div>
-            </>
-          },
-          {
-            type: <span className='text-dark fw-semibold text-dark d-block fs-7'>
-              Single
-            </span>,
-            time: <span className='text-dark fw-semibold text-dark d-block fs-7'>
-              12.30 PM
-            </span>,
-            date: <span className='text-dark fw-semibold text-dark d-block fs-7'>
-              2024.07.25
-            </span>,
-
-            actions: <>
-              <div className='d-flex justify-content-start flex-shrink-0'>
-                <a
-                  href='#'
-                  className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-                >
-                  <KTIcon iconName='pencil' className='fs-3' />
-                </a>
-                <a
-                  href='#'
-                  className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
-                >
-                  <KTIcon iconName='trash' className='fs-3' />
-                </a>
-              </div>
-            </>
-          },
-          {
-            type: <span className='text-dark fw-semibold text-dark d-block fs-7'>
-              Single
-            </span>,
-            time: <span className='text-dark fw-semibold text-dark d-block fs-7'>
-              12.30 PM
-            </span>,
-            date: <span className='text-dark fw-semibold text-dark d-block fs-7'>
-              2024.07.25
-            </span>,
-
-            actions: <>
-              <div className='d-flex justify-content-start flex-shrink-0'>
-                <a
-                  href='#'
-                  className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-                >
-                  <KTIcon iconName='pencil' className='fs-3' />
-                </a>
-                <a
-                  href='#'
-                  className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
-                >
-                  <KTIcon iconName='trash' className='fs-3' />
-                </a>
-              </div>
-            </>
-          },
-
-
-        ]
+        data: oneTimeDataTable
       },
 
 
@@ -231,41 +120,53 @@ const DataSingle = () => {
 
 const ScheduleMovie = () => {
 
-   const fetchData= async()=>{
-    try {
-      const response = await defaultReqPost( 
-        {
-          theaterId:"5c86b633-3db4-4c9a-bbeb-c1faec0f956f",
-          filmDetailsId:"3abb4de3-0315-498d-b7f6-bbac2bd054a0",
-          timeZone:Intl.DateTimeFormat().resolvedOptions().timeZone
-        }
-      , 'films/get-schedule-film');
+  const [recurrentFilms, setRecurrentFilms] = useState<any[]>([]);
+  const [oneTimeFilms, setOneTimeFilms] = useState<any[]>([]);
+  
+  const filmDetailsId = "3abb4de3-0315-498d-b7f6-bbac2bd054a0";
+  const theaterId = "5c86b633-3db4-4c9a-bbeb-c1faec0f956f";
 
-       console.log(response.data)
+  const fetchData = async () => {
+    try {
+      
+      const response = await defaultReqPost(
+        {
+          theaterId: theaterId,
+          filmDetailsId: filmDetailsId,
+          timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+        }
+        , 'films/get-schedule-film');
+
+      console.log(response);
+
+      setRecurrentFilms(response.data && response.data.recurrent ? response.data.recurrent : "");
+      setOneTimeFilms(response.data && response.data.onetime ? response.data.onetime : "");
+
 
     } catch (error: any) {
       console.log(error.response.data.error)
     }
-   }
+  }
 
 
-   useEffect(() => {
-     fetchData()
+  useEffect(() => {
+    fetchData()
   }, []);
-  
+
+
   return (
     <>
-      <Model/>
+      <Model theatreId={theaterId} filmDetailsId={filmDetailsId} />
       <MovieHeader />
 
       <div className='row g-2 g-xl-8'>
         <div className='col-xl-6'>
-          <TablesWidget14 data={DataRecurrent()} className='mb-5 mb-xl-8 card-xl-stretch' />
+          <TablesWidget14 data={DataRecurrent(recurrentFilms ? recurrentFilms : [])} className='mb-5 mb-xl-8 card-xl-stretch' />
 
         </div>
 
         <div className='col-xl-6'>
-          <TablesWidget14 data={DataSingle()} className='mb-5 mb-xl-8 card-xl-stretch' />
+          <TablesWidget14 data={DataSingle(oneTimeFilms ? oneTimeFilms : [])} className='mb-5 mb-xl-8 card-xl-stretch' />
         </div>
 
       </div>
@@ -273,8 +174,6 @@ const ScheduleMovie = () => {
     </>
   )
 }
-
-
 
 
 export default ScheduleMovie
@@ -411,30 +310,97 @@ const MovieHeader = () => {
 }
 
 type Props = {
- 
-  data?: any,
-}
+  data?: { title: string };
+  filmDetailsId: string;
+  theatreId: string;
+};
 
-const Model:React.FC<Props> = ({data={title:"Schedule Movie"}}) => {
+const Model: React.FC<Props> = ({ data = { title: "Schedule Movie" }, filmDetailsId, theatreId} ) => {
+  const [selectedDay, setSelectedDay] = useState<string>('');
+  const [selectedTime, setSelectedTime] = useState<string>('');
+  const [fromDate, setFromDate] = useState<string>('');
+  const [tillDate, setTillDate] = useState<string>('');
+
+  const handleDayClick = (day: string) => {
+    setSelectedDay(day);
+  };
+
+  const handleSaveChanges = () => {
+    const newRecurrentFilm = {
+      filmDetailsId: filmDetailsId,
+      theatreId: theatreId,
+      type: "recurrent",
+      day: selectedDay,
+      time: selectedTime,
+      from: fromDate,
+      till: tillDate,
+    };
+
+    console.log('Saving new recurrent film:', newRecurrentFilm);
+  };
+
   return (
     <div className="modal fade" id="exampleModalCenter" data-bs-backdrop="static" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-        <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
+      <div className="modal-dialog modal-dialog-centered" role="document">
+        <div className="modal-content">
           <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">{data.title}</h5>
-                {/* <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" className="ki ki-close"></i>
-                </button> */}
+            <h5 className="modal-title" id="exampleModalLabel">{data.title}</h5>
+          </div>
+
+          <div className="modal-body">
+            <div className="d-flex justify-content-around mb-3">
+              {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
+                <button
+                  key={day}
+                  type="button"
+                  className={`btn btn-sm ${selectedDay === day ? 'btn-primary' : 'btn-light'} font-weight-bold`}
+                  onClick={() => handleDayClick(day)}
+                >
+                  {day}
+                </button>
+              ))}
             </div>
-            <div className="modal-body">
-                ...
+
+            <div className="mb-3">
+              <label htmlFor="timePicker" className="form-label">Time</label>
+              <input
+                type="time"
+                className="form-control"
+                id="timePicker"
+                value={selectedTime}
+                onChange={(e) => setSelectedTime(e.target.value)}
+              />
             </div>
-            <div className="modal-footer">
-                <button type="button" className="btn btn-sm btn-light-danger font-weight-bold" data-bs-dismiss="modal">Close</button>
-                <button type="button" className="btn btn-sm  btn-primary font-weight-bold">Save changes</button>
+
+            <div className="mb-3">
+              <label htmlFor="fromDatePicker" className="form-label">From</label>
+              <input
+                type="date"
+                className="form-control"
+                id="fromDatePicker"
+                value={fromDate}
+                onChange={(e) => setFromDate(e.target.value)}
+              />
             </div>
+
+            <div className="mb-3">
+              <label htmlFor="tillDatePicker" className="form-label">Till</label>
+              <input
+                type="date"
+                className="form-control"
+                id="tillDatePicker"
+                value={tillDate}
+                onChange={(e) => setTillDate(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="modal-footer">
+            <button type="button" className="btn btn-sm btn-light-danger font-weight-bold" data-bs-dismiss="modal">Close</button>
+            <button type="button" className="btn btn-sm btn-primary font-weight-bold" onClick={handleSaveChanges}>Save changes</button>
           </div>
         </div>
       </div>
-  )
-}
+    </div>
+  );
+};
