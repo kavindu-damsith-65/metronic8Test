@@ -44,8 +44,8 @@ export function Login() {
       setError(null)
       try {
         const response = await defaultReqPost({ email: values.email ,password:values.password}, 'user/theater-admin-login');
-        const { token, role } = response.data;
-        localStorage.setItem('auth', JSON.stringify({ token, role }));
+        const { token, role,theater } = response.data;
+        localStorage.setItem('auth', JSON.stringify({ token, role,theater }));
         navigate('/dashboard');
 
       } catch (error: any) {

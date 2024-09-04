@@ -1,4 +1,4 @@
-import { useNavigate, Outlet, Route, Routes } from 'react-router-dom'
+import { useNavigate, Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import { KTIcon } from '../../../_metronic/helpers'
 import { Dropdown1 } from '../../../_metronic/partials'
 import { TablesWidget14 } from '../../../_metronic/partials/widgets'
@@ -119,16 +119,27 @@ const DataSingle = (oneTimeFilmsData: any) => {
 
 
 const ScheduleMovie = () => {
+  const location = useLocation();
+  const movieSchedule = location.state as {id :string}
+
+
 
   const [recurrentFilms, setRecurrentFilms] = useState<any[]>([]);
   const [oneTimeFilms, setOneTimeFilms] = useState<any[]>([]);
-  
-  const filmDetailsId = "3abb4de3-0315-498d-b7f6-bbac2bd054a0";
-  const theaterId = "5c86b633-3db4-4c9a-bbeb-c1faec0f956f";
 
+  const auth = localStorage.getItem('auth')
+  const { theater } = auth ? (JSON.parse(auth)) : { theater: "" }
+
+ 
+
+  const filmDetailsId = movieSchedule.id;
+  const theaterId = theater;
+
+  
+  
   const fetchData = async () => {
     try {
-      
+
       const response = await defaultReqPost(
         {
           theaterId: theaterId,
@@ -137,7 +148,7 @@ const ScheduleMovie = () => {
         }
         , 'films/get-schedule-film');
 
-      console.log(response);
+     
 
       setRecurrentFilms(response.data && response.data.recurrent ? response.data.recurrent : "");
       setOneTimeFilms(response.data && response.data.onetime ? response.data.onetime : "");
@@ -315,7 +326,7 @@ type Props = {
   theatreId: string;
 };
 
-const Model: React.FC<Props> = ({ data = { title: "Schedule Movie" }, filmDetailsId, theatreId} ) => {
+const Model: React.FC<Props> = ({ data = { title: "Schedule Movie" }, filmDetailsId, theatreId }) => {
   const [selectedDay, setSelectedDay] = useState<string>('');
   const [selectedTime, setSelectedTime] = useState<string>('');
   const [fromDate, setFromDate] = useState<string>('');

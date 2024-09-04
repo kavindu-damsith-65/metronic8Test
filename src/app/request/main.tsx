@@ -43,6 +43,8 @@ export const defaultReqGet = (path: string): Promise<AxiosResponse> => {
 };
 
 
+export const statics=server+"get-uploads/"
+
 
 
 

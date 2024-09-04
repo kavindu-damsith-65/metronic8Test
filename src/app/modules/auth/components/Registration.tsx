@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom'
 import { toAbsoluteUrl } from '../../../../_metronic/helpers'
 import { PasswordMeterComponent } from '../../../../_metronic/assets/ts/components'
 import { defaultReqPost } from '../../../request/main'
+import { TrigToast } from '../../../request/Toast';
 
 
 const initialValues = {
@@ -59,7 +60,8 @@ export function Registration() {
         const response = await defaultReqPost({ email: values.email },'user/theater-admin-check');
         navigate('/auth/theater-details', { state: { data: values } });
         
-      }catch (error) {
+      }catch (error:any) {
+        TrigToast(error.response.data.error, "error")
        
         setSubmitting(false)
         setLoading(false)
