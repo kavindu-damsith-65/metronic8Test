@@ -10,9 +10,10 @@ type Props = {
   className: string
   chartColor: string
   chartHeight: string
+  data?:any
 }
 
-const MixedWidget11: React.FC<Props> = ({className, chartColor, chartHeight}) => {
+const MixedWidget11: React.FC<Props> = ({className, chartColor, chartHeight,data}) => {
   const chartRef = useRef<HTMLDivElement | null>(null)
   const {mode} = useThemeMode()
   const refreshChart = () => {
@@ -20,7 +21,7 @@ const MixedWidget11: React.FC<Props> = ({className, chartColor, chartHeight}) =>
       return
     }
 
-    const chart = new ApexCharts(chartRef.current, chartOptions(chartColor, chartHeight))
+    const chart = new ApexCharts(chartRef.current, chartOptions(chartColor, chartHeight,data))
     if (chart) {
       chart.render()
     }
@@ -46,12 +47,12 @@ const MixedWidget11: React.FC<Props> = ({className, chartColor, chartHeight}) =>
         {/* begin::Hidden */}
         <div className='d-flex flex-stack flex-wrap flex-grow-1 px-9 pt-9 pb-3'>
           <div className='me-2'>
-            <span className='fw-bold text-gray-800 d-block fs-3'>Sales</span>
+            <span className='fw-bold text-gray-800 d-block fs-3'>{data.title}</span>
 
-            <span className='text-gray-400 fw-semibold'>This week / last week</span>
+            <span className='text-gray-400 fw-semibold'>{data.subTitle}</span>
           </div>
 
-          <div className={`d-flex align-items-center fw-bold fs-3 text-${chartColor}`}>$15,300 <KTIcon iconName='arrow-down' className='fs-3 text-success me-2' /></div>
+          <div className={`d-flex align-items-center fw-bold fs-3 text-${chartColor}`}>{data.total}</div>
         </div>
         {/* end::Hidden */}
 
@@ -63,7 +64,7 @@ const MixedWidget11: React.FC<Props> = ({className, chartColor, chartHeight}) =>
   )
 }
 
-const chartOptions = (chartColor: string, chartHeight: string): ApexOptions => {
+const chartOptions = (chartColor: string, chartHeight: string,data?:any): ApexOptions => {
   const labelColor = getCSSVariableValue('--bs-gray-500')
   const borderColor = getCSSVariableValue('--bs-gray-200')
   const secondaryColor = getCSSVariableValue('--bs-gray-300')
@@ -72,12 +73,12 @@ const chartOptions = (chartColor: string, chartHeight: string): ApexOptions => {
   return {
     series: [
       {
-        name: 'Profit',
-        data: [50, 60, 70, 80, 60, 50, 70],
+        name: data.item1Name,
+        data: data.item1Value,
       },
       {
-        name: 'Profit',
-        data: [10, 70, 30, 20, 60, 40, 50],
+        name: data.item2Name,
+        data: data.item2Value,
       },
     ],
     chart: {
@@ -107,7 +108,7 @@ const chartOptions = (chartColor: string, chartHeight: string): ApexOptions => {
       colors: ['transparent'],
     },
     xaxis: {
-      categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      categories: data.columnNames,
       axisBorder: {
         show: false,
       },
@@ -115,6 +116,7 @@ const chartOptions = (chartColor: string, chartHeight: string): ApexOptions => {
         show: false,
       },
       labels: {
+        show: false,
         style: {
           colors: labelColor,
           fontSize: '12px',
@@ -159,7 +161,7 @@ const chartOptions = (chartColor: string, chartHeight: string): ApexOptions => {
       },
       y: {
         formatter: function (val) {
-          return '$' + val
+          return '' + val
         },
       },
     },
