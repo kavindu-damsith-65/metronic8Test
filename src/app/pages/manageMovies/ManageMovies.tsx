@@ -8,7 +8,7 @@ import { defaultReqPost } from '../../request/main'
 import { statics } from '../../request/main'
 import { KTIcon } from '../../../_metronic/helpers'
 
-type Movie = {
+export type Movie = {
     id: string;
     name: string;
     rating: string;
@@ -30,7 +30,7 @@ const ManageMovies = () => {
 
     const getData = async () => {
         try {
-            const response = await defaultReqPost({}, 'films/get-film-details');
+            const response = await defaultReqPost({}, 'films/get-film-details-all');
             setData(response.data);
         } catch (error) {
             console.error('Error fetching movie details:', error);
@@ -97,7 +97,7 @@ const ManageMovies = () => {
                                     name={movie.name}
                                     type={movie.category}
                                     rating={parseFloat(movie.rating) + '/10'}
-                                    totalEarnings='10'
+                                    totalEarnings={movie.duration}
                                     online={true}
                                     id={movie.id}
                                 />

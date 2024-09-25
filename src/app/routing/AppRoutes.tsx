@@ -1,5 +1,4 @@
 
-
 import { FC } from 'react'
 import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom'
 import { PrivateRoutes } from './PrivateRoutes'
@@ -7,7 +6,7 @@ import { ErrorsPage } from '../modules/errors/ErrorsPage'
 import { Logout, AuthPage } from '../modules/auth'
 import { App } from '../App'
 import { UserRoutes } from './UserRoutes'
-import { default as UserApp } from '../user/App';
+// import { default as UserApp } from '../user/App';
 
 const AppRoutes: FC = () => {
   // const {currentUser} = useAuth()
@@ -39,3 +38,8 @@ const AppRoutes: FC = () => {
 }
 
 export { AppRoutes }
+
+
+
+
+

@@ -32,13 +32,13 @@ const Card6: FC<Props> = ({
     <div className='card'>
       <div className='card-body d-flex flex-center flex-column p-5'>
         <div className='mb-5'>
-          <div className='symbol symbol-150px symbol-circle'>
+          <div className='symbol symbol-200px ' style={{height:'300px'}}>
             {color ? (
               <span className={`symbol-label bg-light-${color} text-${color} fs-5 fw-bolder`}>
                 {name.charAt(0)}
               </span>
             ) : (
-              <img alt='Pic' style={{ objectFit: "contain" }} src={avatar} />
+              <img  style={{ objectFit: "cover" ,height:'100%'}} src={avatar} />
             )}
             {online && (
               <div className='symbol-badge bg-success start-100 top-100 border-4 h-15px w-15px ms-n3 mt-n3'></div>
@@ -60,7 +60,7 @@ const Card6: FC<Props> = ({
 
           <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 mx-3 px-4 mb-3'>
             <div className='fs-6 fw-bolder text-gray-700 d-flex flex-center'>{totalEarnings}</div>
-            <div className='fw-bold text-gray-400 d-flex flex-center'>Total Schedulings</div>
+            <div className='fw-bold text-gray-400 d-flex flex-center'>Duration</div>
           </div>
         </div>
 

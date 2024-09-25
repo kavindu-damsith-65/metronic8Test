@@ -38,7 +38,9 @@ type ColItem = {
 
 export const TheaterWireFrame = () => {
 
-    const theaterId = "2361201f-fa03-40b0-9b7c-40e1df05d270"
+    const auth = localStorage.getItem('auth')
+    const { theater } = auth ? (JSON.parse(auth)) : { theater: "" }
+    const theaterId = theater
     const [theaterGridId, setTheaterGridId] = useState(null)
     const [numCol, setNumCol] = useState("")
     const [verifiedCol, setVerifiedCol] = useState(false)
@@ -480,7 +482,7 @@ export const TheaterWireFrame = () => {
                                                                             type='text'
                                                                             value={characters.find(item => item.index == index)?.child ?? ""}
                                                                             className='form-control form-control-sm form-control-solid'
-                                                                            placeholder='Adult ticket price'
+                                                                            placeholder='Child ticket price'
                                                                             onInput={(e: React.FormEvent<HTMLInputElement>) => {
                                                                                 const input = e.target as HTMLInputElement;
                                                                                 input.value = input.value.replace(/[^0-9]/g, '');

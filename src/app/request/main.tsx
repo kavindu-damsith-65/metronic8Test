@@ -42,6 +42,21 @@ export const defaultReqGet = (path: string): Promise<AxiosResponse> => {
     });
 };
 
+export const defaultReqDelete = (path: string): Promise<AxiosResponse> => {
+  return axios
+    .delete<AxiosResponse>(server + path, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((response: AxiosResponse) => {
+      return response;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
 
 export const statics=server+"get-uploads/"
 

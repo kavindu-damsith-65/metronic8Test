@@ -31,3 +31,9 @@ export const TrigToast = (message: string, type: string) => {
     }
 
 }
+
+
+export const range = (start:number, end:number) => {
+    return Array.from({ length: end - start }, (_, i) => start + i);
+  };
+  
