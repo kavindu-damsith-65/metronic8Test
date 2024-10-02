@@ -42,7 +42,7 @@ const AccountHeader: React.FC = () => {
           <div className='d-flex flex-wrap flex-sm-nowrap mb-3'>
             <div className='me-7 mb-4'>
               <div className='symbol symbol-100px symbol-lg-160px symbol-fixed position-relative'>
-                <img src={"https://cdn-icons-png.flaticon.com/512/0/745.png"} alt='Metronic' />
+                <img src={"https://ca-times.brightspotcdn.com/dims4/default/27db8b4/2147483647/strip/true/crop/1170x780+0+48/resize/1200x800!/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F06%2F84%2F88495353418284e1e9ded141b26b%2Fet-27-best-movie-theaters-starlight-cinemas-071.jpg"} alt='Metronic' />
                 <div className='position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px'></div>
               </div>
             </div>

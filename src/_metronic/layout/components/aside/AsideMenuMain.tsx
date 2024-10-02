@@ -6,27 +6,40 @@ import { AsideMenuItem } from './AsideMenuItem'
 
 export function AsideMenuMain() {
   const intl = useIntl()
-
+  const auth = localStorage.getItem('auth')
+  const { role } = auth ? (JSON.parse(auth)) : { role: "" }
   return (
     <>
-      <AsideMenuItem
-        to='/dashboard'
-        icon='element-11'
-        title={intl.formatMessage({ id: 'MENU.DASHBOARD' })}
-      />
-      <AsideMenuItem to='/movies' icon='switch' title='Manage Movies' />
-      <AsideMenuItem to='/theater' icon='shop' title='Manage Theater' />
-      <AsideMenuItem to='/analytics' icon='chart' title='Analytics' />
-      <AsideMenuItem to='/billing' icon='purchase' title='Billing' />
-      <div className='menu-item'>
-        <div className='menu-content pt-8 pb-2'>
-          <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Private</span>
-        </div>
-      </div>
-      <AsideMenuItemWithSub to='/crafted/accounts' title='Accounts' icon='profile-circle'>
-        <AsideMenuItem to='/crafted/account/overview' title='Overview' hasBullet={true} />
-        <AsideMenuItem to='/crafted/account/settings' title='Settings' hasBullet={true} />
-      </AsideMenuItemWithSub>
+      {role == "theaterAdm" ?
+        <>
+          <AsideMenuItem
+            to='/dashboard'
+            icon='element-11'
+            title={intl.formatMessage({ id: 'MENU.DASHBOARD' })}
+          />
+          <AsideMenuItem to='/movies' icon='switch' title='Manage Movies' />
+          <AsideMenuItem to='/theater' icon='shop' title='Manage Theater' />
+          <AsideMenuItem to='/billing' icon='purchase' title='Billing' />
+          <div className='menu-item'>
+            <div className='menu-content pt-8 pb-2'>
+              <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Private</span>
+            </div>
+          </div>
+          <AsideMenuItemWithSub to='/crafted/accounts' title='Accounts' icon='profile-circle'>
+            <AsideMenuItem to='/crafted/account/overview' title='Overview' hasBullet={true} />
+            <AsideMenuItem to='/crafted/account/settings' title='Settings' hasBullet={true} />
+          </AsideMenuItemWithSub>
+        </> :
+        <>
+         <AsideMenuItem
+            to='/dashboard'
+            icon='element-11'
+            title={intl.formatMessage({ id: 'MENU.DASHBOARD' })}
+          />
+          <AsideMenuItem to='/movies' icon='switch' title='Add Movie' />
+          <AsideMenuItem to='/verify-theater' icon='chart' title='Manage Theaters' />
+        </>}
+
 
       {/* <AsideMenuItemWithSub to='/apps/chat' title='Chat' icon='message-text-2'>
         <AsideMenuItem to='/apps/chat/private-chat' title='Private Chat' hasBullet={true} />

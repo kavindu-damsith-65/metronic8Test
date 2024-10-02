@@ -1,4 +1,4 @@
-import { FC, lazy, Suspense } from 'react'
+import { FC, lazy, Suspense, useEffect } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { MasterLayout } from '../../_metronic/layout/MasterLayout'
 import TopBarProgress from 'react-topbar-progress-indicator'
@@ -10,6 +10,10 @@ import { getCSSVariableValue } from '../../_metronic/assets/ts/_utils'
 import { WithChildren } from '../../_metronic/helpers'
 import BuilderPageWrapper from '../pages/layout-builder/BuilderPageWrapper'
 import { ManageTheaterWrapper } from '../pages/manageTheater/ManageTheaterWrapper'
+import { useNavigate } from 'react-router-dom';
+import { AddMoviesWrapper } from '../pages/addMovies/AddMovies'
+import { CurrentMoviesWrapper } from '../pages/addMovies/CurrentMovies'
+import { CurrentTheatersWrapper } from '../pages/currentTheaters/CurrentTheatersWrapper'
 
 const PrivateRoutes = () => {
   const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
@@ -19,33 +23,69 @@ const PrivateRoutes = () => {
   const ChatPage = lazy(() => import('../modules/apps/chat/ChatPage'))
   const UsersPage = lazy(() => import('../modules/apps/user-management/UsersPage'))
 
+  const navigate = useNavigate();
+  const auth = localStorage.getItem('auth')
+  const { role } = auth ? (JSON.parse(auth)) : { role: null }
+  useEffect(() => {
+    if (role != "admin" && role != "theaterAdm") {
+      navigate('auth/login');
+    }
+  }, [role]);
+
   return (
+
     <Routes>
       <Route element={<MasterLayout />}>
-        <Route path='auth/*' element={<Navigate to='/dashboard' />} />
-        <Route path='dashboard' element={<DashboardWrapper />} />
-        <Route path='movies/*' element={<ManageMoviesWrapper />} />
-        <Route path='theater/*' element={<ManageTheaterWrapper />} />
-        <Route path='billing/*' element={<BillingWrapper />} />
-        <Route path='analytics' element={<DashboardWrapper />} />
-        
+        {role == "theaterAdm" ?
+          <>
+            <Route path='dashboard' element={<DashboardWrapper />} />
+            <Route path='movies/*' element={<ManageMoviesWrapper />} />
+            <Route path='theater/*' element={<ManageTheaterWrapper />} />
+            <Route path='billing/*' element={<BillingWrapper />} />
+            <Route path='analytics' element={<DashboardWrapper />} />
 
-        <Route
-          path='crafted/account/*'
-          element={
-            <SuspensedView>
-              <AccountPage />
-            </SuspensedView>
-          }
-        />
-        <Route
-          path='apps/chat/*'
-          element={
-            <SuspensedView>
-              <ChatPage />
-            </SuspensedView>
-          }
-        />
+
+            <Route
+              path='crafted/account/*'
+              element={
+                <SuspensedView>
+                  <AccountPage />
+                </SuspensedView>
+              }
+            />
+            <Route
+              path='apps/chat/*'
+              element={
+                <SuspensedView>
+                  <ChatPage />
+                </SuspensedView>
+              }
+            />
+          </> :
+          <>
+          <Route path='dashboard' element={<BillingWrapper />} />
+          <Route path='movies' element={<CurrentMoviesWrapper />} />
+          <Route path='add-movie' element={<AddMoviesWrapper />} />
+          <Route path='verify-theater' element={<CurrentTheatersWrapper />} />
+          <Route
+              path='crafted/account/*'
+              element={
+                <SuspensedView>
+                  <AccountPage />
+                </SuspensedView>
+              }
+            />
+            <Route
+              path='apps/chat/*'
+              element={
+                <SuspensedView>
+                  <ChatPage />
+                </SuspensedView>
+              }
+            />
+          </>
+        }
+
 
 
 

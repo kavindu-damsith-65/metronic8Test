@@ -58,6 +58,13 @@ export const defaultReqDelete = (path: string): Promise<AxiosResponse> => {
 };
 
 
+
+
+
+
+
+
+
 export const statics=server+"get-uploads/"
 
 

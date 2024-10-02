@@ -54,8 +54,9 @@ const AuthLayout = () => {
 }
 
 const AuthPage = () => {
-  const authData = localStorage.getItem('auth');
-  if (authData) {
+  const auth = localStorage.getItem('auth');
+  const { role } = auth ? (JSON.parse(auth)) : { role: null }
+  if (auth && role ) {
     return (
       <Navigate to='/dashboard' />
     )
