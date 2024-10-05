@@ -82,7 +82,8 @@ function groupingOnSelectAll<T>(
     return
   }
 
-  if (!data || !data.length) {
+  // Ensure data is an array
+  if (!Array.isArray(data) || !data.length) {
     return
   }
 

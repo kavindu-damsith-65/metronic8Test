@@ -14,7 +14,7 @@ const AppRoutes: FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<App />}>
+        <Route element={<App />}> {/**For every path this will load*/}
           <Route path='auth/*' element={<AuthPage />} />
           <Route path='error/*' element={<ErrorsPage />} />
           <Route path='logout' element={<Logout />} />

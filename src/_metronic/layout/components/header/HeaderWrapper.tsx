@@ -17,14 +17,14 @@ export function HeaderWrapper() {
     >
       {/* begin::Brand */}
       <div className='header-brand d-flex align-items-center'>
-      
         <Link to='/'>
-          <img
+          {/* <img
             alt='Logo'
             src={toAbsoluteUrl('/media/images/logos/logo.png')}
             className='h-35px h-lg-35px'
           />
-         
+          */}
+          <div style={{fontSize:'1.2rem', color:'white', fontWeight:500}}>Cinema World</div>
         </Link>
         {/* <p className='text-white p-0 m-0'>Movie Tickets</p> */}
         {/* end::Logo */}

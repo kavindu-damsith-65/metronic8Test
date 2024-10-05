@@ -19,7 +19,7 @@ export function AsideMenuMain() {
           />
           <AsideMenuItem to='/movies' icon='switch' title='Manage Movies' />
           <AsideMenuItem to='/theater' icon='shop' title='Manage Theater' />
-          <AsideMenuItem to='/billing' icon='purchase' title='Billing' />
+          {/* <AsideMenuItem to='/billing' icon='purchase' title='Billing' /> */}
           <div className='menu-item'>
             <div className='menu-content pt-8 pb-2'>
               <span className='menu-section text-muted text-uppercase fs-8 ls-1'>Private</span>

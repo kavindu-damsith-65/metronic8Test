@@ -35,8 +35,6 @@ const TheaterDashboardPage = () => {
 
 
   const getData = async () => {
-
-
     try {
       const response = await defaultReqPost({
         today: localDate.format('YYYY-MM-DD'),
@@ -47,7 +45,6 @@ const TheaterDashboardPage = () => {
       console.error('Error', error);
     }
   }
-
 
   return (
     <>
@@ -63,7 +60,7 @@ const TheaterDashboardPage = () => {
           <div className='col-xxl-4'>
               <MixedWidget10
                 data={(() => {
-                  const i = theaterData.dailyEarninigsData
+                  const i = theaterData.dailyEarninigsData || { dailyEarninigs: [], today: { total_price: 0 } };
                   const prices = i.dailyEarninigs.map((item: any) => parseFloat(item.total_price))
                   const data = {
                     title: "Daily Earnings",
