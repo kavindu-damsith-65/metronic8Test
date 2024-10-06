@@ -65,7 +65,7 @@ const TheaterDashboardPage = () => {
                   const data = {
                     title: "Daily Earnings",
                     subTitle: "Earnings of past 28(max) days",
-                    total: parseFloat(i.today.total_price),
+                    total: i.today? parseFloat(i.today.total_price):0,
                     itemName: "Profit(Rs)",
                     itemValue: prices,
                     columnNames: i.dailyEarninigs.map((item: any) => item.date),

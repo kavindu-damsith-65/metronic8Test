@@ -87,7 +87,7 @@ function groupingOnSelectAll<T>(
     return
   }
 
-  setSelected(data.filter((item) => item.id).map((item) => item.id))
+  setSelected(data?.filter((item) => item.id).map((item) => item.id))
 }
 
 // Hook

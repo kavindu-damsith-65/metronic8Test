@@ -51,7 +51,7 @@ const CurrentMovies = () => {
     }, [refresh]);
 
    
-    const filteredMovies = data.filter((movie) =>
+    const filteredMovies = data?.filter((movie) =>
         movie.name.toLowerCase().includes(searchVal.toLowerCase())
     );
 

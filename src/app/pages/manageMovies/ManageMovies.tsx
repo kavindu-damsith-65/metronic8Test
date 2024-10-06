@@ -42,7 +42,7 @@ const ManageMovies = () => {
     }, []);
 
     // Filtered movies based on the search input
-    const filteredMovies = data.filter((movie) =>
+    const filteredMovies = data?.filter((movie) =>
         movie.name.toLowerCase().includes(searchVal.toLowerCase())
     );
 
