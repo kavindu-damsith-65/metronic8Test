@@ -77,6 +77,9 @@ const HeaderToolbar = () => {
     }
   }, [])
 
+  const auth = localStorage.getItem('auth')
+  const { theater } = auth ? (JSON.parse(auth)) : { theater: "" }
+
   return (
     <div className='toolbar d-flex align-items-stretch'>
       {/* begin::Toolbar container */}
@@ -106,10 +109,13 @@ const HeaderToolbar = () => {
             {/* begin::Actions */}
             <div className='d-flex'>
               {/* begin::Action */}
-              <Link to='/crafted/account/settings' className='btn btn-sm btn-icon btn-icon-muted btn-active-icon-primary'>
-              <KTIcon iconName='setting' className='fs-1' />
-              </Link>
-             
+              {theater ?
+                <Link to='/crafted/account/settings' className='btn btn-sm btn-icon btn-icon-muted btn-active-icon-primary'>
+                  <KTIcon iconName='setting' className='fs-1' />
+                </Link>
+                : null}
+
+
 
 
               {/* begin::Theme mode */}

@@ -63,7 +63,7 @@ const PrivateRoutes = () => {
             />
           </> :
           <>
-          <Route path='dashboard' element={<BillingWrapper />} />
+          <Route path='dashboard' element={<CurrentMoviesWrapper />} />
           <Route path='movies' element={<CurrentMoviesWrapper />} />
           <Route path='add-movie' element={<AddMoviesWrapper />} />
           <Route path='verify-theater' element={<CurrentTheatersWrapper />} />

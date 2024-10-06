@@ -1,14 +1,14 @@
 import { useIntl } from 'react-intl'
 import { PageTitle } from '../../../_metronic/layout/core'
 import { TablesWidget15 } from '../../../_metronic/partials/widgets'
-import { PersonalHeader } from '../../modules/accounts/PersonalHeader'
+
 
 
 
 const BillingPage = () => {
   return (
     <>
-      <PersonalHeader />
+     
 
       <PaymentMethods />
 

@@ -26,8 +26,7 @@ export function HeaderWrapper() {
           */}
           <div style={{fontSize:'1.2rem', color:'white', fontWeight:500}}>Cinema World</div>
         </Link>
-        {/* <p className='text-white p-0 m-0'>Movie Tickets</p> */}
-        {/* end::Logo */}
+        
 
         {aside.minimize && (
           <div
