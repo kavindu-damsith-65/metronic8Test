@@ -63,7 +63,7 @@ export default function ImageUpload({image,setImage}:{image:any;setImage:any}) {
         :
         <div
           className='image-input-wrapper w-250px h-250px'
-          style={{ backgroundImage: `url(${'https://cdn-icons-png.flaticon.com/512/2716/2716054.png'})` }}
+          style={{cursor:'pointer', backgroundImage: `url(${'https://cdn-icons-png.flaticon.com/512/2716/2716054.png'})` }}
         ></div>
       }
 

@@ -6,12 +6,12 @@ import {EmailPreferences} from './cards/EmailPreferences'
 import {Notifications} from './cards/Notifications'
 import {DeactivateAccount} from './cards/DeactivateAccount'
 
-export function Settings() {
+export function Settings({setRefresh,refresh}:{refresh:boolean,setRefresh:any}) {
   return (
     <>
-      <ProfileDetails />
-      <SignInMethod />
-      <DeactivateAccount />
+      <ProfileDetails  setRefresh={setRefresh} refresh={refresh}/>
+      {/* <SignInMethod /> */}
+      
     </>
   )
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Navigate, Outlet, Route, Routes} from 'react-router-dom'
 import {PageLink, PageTitle} from '../../../_metronic/layout/core'
 import {Overview} from './components/Overview'
@@ -22,12 +22,15 @@ const accountBreadCrumbs: Array<PageLink> = [
 ]
 
 const AccountPage: React.FC = () => {
+
+  const [refresh,setRefresh]=useState(false)
+  
   return (
     <Routes>
       <Route
         element={
           <>
-            <PersonalHeader />
+            <PersonalHeader refresh={refresh}/>
             <Outlet />
           </>
         }
@@ -46,7 +49,7 @@ const AccountPage: React.FC = () => {
           element={
             <>
               <PageTitle breadcrumbs={accountBreadCrumbs}>Settings</PageTitle>
-              <Settings />
+              <Settings refresh={refresh} setRefresh={setRefresh} />
             </>
           }
         />
