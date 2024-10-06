@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-no-target-blank */
 import { useIntl } from 'react-intl'
-import { KTIcon } from '../../../helpers'
 import { AsideMenuItemWithSub } from './AsideMenuItemWithSub'
 import { AsideMenuItem } from './AsideMenuItem'
 
@@ -119,6 +118,9 @@ export function AsideMenuMain() {
           <span className='menu-title'>Changelog {process.env.REACT_APP_VERSION}</span>
         </a>
       </div> */}
+
+
+
     </>
   )
 }
