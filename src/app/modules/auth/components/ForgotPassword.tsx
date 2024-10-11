@@ -1,12 +1,12 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import * as Yup from 'yup'
 import clsx from 'clsx'
-import {Link} from 'react-router-dom'
-import {useFormik} from 'formik'
-// import {requestPassword} from '../core/_requests'
+import { Link, useNavigate } from 'react-router-dom'
+import { useFormik } from 'formik'
+import { defaultReqPost } from '../../../request/main'
 
 const initialValues = {
-  email: 'admin@demo.com',
+  email: '',
 }
 
 const forgotPasswordSchema = Yup.object().shape({
@@ -18,27 +18,28 @@ const forgotPasswordSchema = Yup.object().shape({
 })
 
 export function ForgotPassword() {
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
   const [hasErrors, setHasErrors] = useState<boolean | undefined>(undefined)
+
   const formik = useFormik({
     initialValues,
     validationSchema: forgotPasswordSchema,
-    onSubmit: (values, {setStatus, setSubmitting}) => {
+    onSubmit: async (values, { setStatus, setSubmitting }) => {
       setLoading(true)
       setHasErrors(undefined)
-      setTimeout(() => {
-        // requestPassword(values.email)
-        //   .then(({data: {result}}) => {
-        //     setHasErrors(false)
-        //     setLoading(false)
-        //   })
-        //   .catch(() => {
-        //     setHasErrors(true)
-        //     setLoading(false)
-        //     setSubmitting(false)
-        //     setStatus('The login detail is incorrect')
-        //   })
-      }, 1000)
+      setError("")
+      try {
+        const response = await defaultReqPost({ email: values.email }, 'user/get-otp')
+        setHasErrors(false)
+        navigate('/auth/otp-verify', { state: {email:values.email,role:response.data.role} });
+      } catch (error: any) {
+        setSubmitting(false)
+        setError(error.response.data.message)
+        setHasErrors(true)
+        setLoading(false)
+      }
     },
   })
 
@@ -50,22 +51,16 @@ export function ForgotPassword() {
       onSubmit={formik.handleSubmit}
     >
       <div className='text-center mb-10'>
-        {/* begin::Title */}
         <h1 className='text-dark fw-bolder mb-3'>Forgot Password ?</h1>
-        {/* end::Title */}
-
-        {/* begin::Link */}
         <div className='text-gray-500 fw-semibold fs-6'>
           Enter your email to reset your password.
         </div>
-        {/* end::Link */}
       </div>
 
-      {/* begin::Title */}
       {hasErrors === true && (
         <div className='mb-lg-15 alert alert-danger'>
           <div className='alert-text font-weight-bold'>
-            Sorry, looks like there are some errors detected, please try again.
+            {error}
           </div>
         </div>
       )}
@@ -75,9 +70,7 @@ export function ForgotPassword() {
           <div className='text-info'>Sent password reset. Please check your email</div>
         </div>
       )}
-      {/* end::Title */}
 
-      {/* begin::Form group */}
       <div className='fv-row mb-8'>
         <label className='form-label fw-bolder text-gray-900 fs-6'>Email</label>
         <input
@@ -87,10 +80,8 @@ export function ForgotPassword() {
           {...formik.getFieldProps('email')}
           className={clsx(
             'form-control bg-transparent',
-            {'is-invalid': formik.touched.email && formik.errors.email},
-            {
-              'is-valid': formik.touched.email && !formik.errors.email,
-            }
+            { 'is-invalid': formik.touched.email && formik.errors.email },
+            { 'is-valid': formik.touched.email && !formik.errors.email }
           )}
         />
         {formik.touched.email && formik.errors.email && (
@@ -101,9 +92,7 @@ export function ForgotPassword() {
           </div>
         )}
       </div>
-      {/* end::Form group */}
 
-      {/* begin::Form group */}
       <div className='d-flex flex-wrap justify-content-center pb-lg-0'>
         <button type='submit' id='kt_password_reset_submit' className='btn btn-primary me-4'>
           <span className='indicator-label'>Submit</span>
@@ -123,9 +112,8 @@ export function ForgotPassword() {
           >
             Cancel
           </button>
-        </Link>{' '}
+        </Link>
       </div>
-      {/* end::Form group */}
     </form>
   )
 }

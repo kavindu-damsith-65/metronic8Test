@@ -6,6 +6,8 @@ import { ForgotPassword } from './components/ForgotPassword'
 import { Login } from './components/Login'
 import { toAbsoluteUrl } from '../../../_metronic/helpers'
 import TheaterDetails from './components/TheaterDetails'
+import OtpVerification from './components/OtpVerify'
+import { PasswordReset } from './components/PasswordReset'
 
 const AuthLayout = () => {
   useEffect(() => {
@@ -69,6 +71,8 @@ const AuthPage = () => {
           <Route path='registration' element={<Registration />} />
 
           <Route path='forgot-password' element={<ForgotPassword />} />
+          <Route path='otp-verify' element={<OtpVerification />} />
+          <Route path='password-reset' element={<PasswordReset />} />
           <Route index element={<Login />} />
         </Route>
       </Routes>

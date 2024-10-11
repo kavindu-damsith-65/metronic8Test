@@ -7,6 +7,10 @@ import { useFormik } from 'formik'
 import { toAbsoluteUrl } from '../../../../_metronic/helpers'
 import { defaultReqPost } from '../../../request/main'
 import { useNavigate } from 'react-router-dom'
+import { useGoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
+import { GoogleLogin } from '@react-oauth/google';
+
 
 
 const loginSchema = Yup.object().shape({
@@ -33,7 +37,7 @@ export function Login() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null);
- 
+
 
 
   const formik = useFormik({
@@ -43,9 +47,9 @@ export function Login() {
       setLoading(true)
       setError(null)
       try {
-        const response = await defaultReqPost({ email: values.email ,password:values.password}, 'user/theater-admin-login');
-        const { token, role,theater } = response.data;
-        localStorage.setItem('auth', JSON.stringify({ token, role,theater }));
+        const response = await defaultReqPost({ email: values.email, password: values.password }, 'user/theater-admin-login');
+        const { token, role, theater } = response.data;
+        localStorage.setItem('auth', JSON.stringify({ token, role, theater }));
         navigate('/dashboard');
 
       } catch (error: any) {
@@ -54,6 +58,32 @@ export function Login() {
       }
     },
   })
+
+
+
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    if (credentialResponse.credential) {
+      const decoded: any = jwtDecode(credentialResponse.credential); 
+      try {
+        const response = await defaultReqPost({ email: decoded.email, password: "used_google_login" }, 'user/theater-admin-login');
+        const { token, role, theater } = response.data;
+        localStorage.setItem('auth', JSON.stringify({ token, role, theater }));
+        navigate('/dashboard');
+
+      } catch (error: any) {
+        setError(error.response.data.error)
+        setLoading(false)
+      } 
+    }
+  }
+
+  // Google Login Error handler
+  const handleGoogleError = () => {
+    setError('Google Login Failed')
+   
+  }
+
+
 
   return (
     <form
@@ -80,7 +110,7 @@ export function Login() {
       {error ?
         <div className='mb-5 bg-light-info px-8  py-2 rounded'>
           <div className='text-danger'>
-          <strong>Error : </strong>{error}
+            <strong>Error : </strong>{error}
           </div>
         </div> : null}
 
@@ -159,27 +189,13 @@ export function Login() {
       {/* end::Separator */}
 
 
-
-      <div className='row g-3 mb-9'>
-        {/* begin::Col */}
-        <div className='col-12'>
-          {/* begin::Google link */}
-          <a
-            href='#'
-            className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'
-          >
-            <img
-              alt='Logo'
-              src={toAbsoluteUrl('/media/svg/brand-logos/google-icon.svg')}
-              className='h-15px me-3'
-            />
-            Sign in with Google
-          </a>
-          {/* end::Google link */}
+      <div className="row g-3 mb-9">
+        <div className="col-12">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}  
+            onError={handleGoogleError}      
+          />
         </div>
-        {/* end::Col */}
-
-
       </div>
 
 

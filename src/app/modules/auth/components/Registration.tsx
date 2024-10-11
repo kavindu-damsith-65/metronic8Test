@@ -10,6 +10,10 @@ import { toAbsoluteUrl } from '../../../../_metronic/helpers'
 import { PasswordMeterComponent } from '../../../../_metronic/assets/ts/components'
 import { defaultReqPost } from '../../../request/main'
 import { TrigToast } from '../../../request/Toast';
+import { useGoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
+import { GoogleLogin } from '@react-oauth/google';
+
 
 
 const initialValues = {
@@ -57,7 +61,7 @@ export function Registration() {
     onSubmit: async (values, { setStatus, setSubmitting }) => {
       setLoading(true)
       try {
-        const response = await defaultReqPost({ email: values.email },'user/theater-admin-check');
+        const response = await defaultReqPost({ email: values.email },'user/check-email');
         navigate('/auth/theater-details', { state: { data: values } });
         
       }catch (error:any) {
@@ -70,6 +74,37 @@ export function Registration() {
     
     },
   })
+
+
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    if (credentialResponse.credential) {
+      const decoded: any = jwtDecode(credentialResponse.credential); 
+      try {
+        const response = await defaultReqPost({ email: decoded.email },'user/check-email');
+        const values = {
+          firstname: decoded.name,
+          lastname: '',
+          email: decoded.email,
+          password: 'used_google_login',
+          changepassword: 'used_google_login',
+          acceptTerms: true,
+        }
+        navigate('/auth/theater-details', { state: { data: values } });
+      }catch (error:any) {
+        TrigToast(error.response.data.error, "error")
+       
+        setLoading(false)
+      } 
+    }
+  }
+
+
+  const handleGoogleError = () => {
+    TrigToast('Google Login Failed', "error")
+   
+   
+  }
+
 
   useEffect(() => {
     PasswordMeterComponent.bootstrap()
@@ -290,29 +325,15 @@ export function Registration() {
       </div>
 
 
-      {/* begin::Login options */}
-      <div className='row g-3 mb-9'>
-        {/* begin::Col */}
-        <div className='col-12'>
-          {/* begin::Google link */}
-          <a
-            href='#'
-            className='btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100'
-          >
-            <img
-              alt='Logo'
-              src={toAbsoluteUrl('/media/svg/brand-logos/google-icon.svg')}
-              className='h-15px me-3'
-            />
-            Sign in with Google
-          </a>
-          {/* end::Google link */}
+      <div className="row g-3 mb-9">
+        <div className="col-12">
+          <GoogleLogin
+            onSuccess={handleGoogleSuccess}  
+            onError={handleGoogleError}      
+          />
         </div>
-        {/* end::Col */}
-
-
       </div>
-      {/* end::Login options */}
+
 
       {/* begin::Form group */}
       <div className='text-center'>
