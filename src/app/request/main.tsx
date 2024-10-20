@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 
-export const server="http://52.55.22.191/api/"
+export const server="http://52.5.0.253/api/"
 // export const server="http://localhost:3001/"
 const auth=localStorage.getItem('auth')
 const { token } = auth?(JSON.parse(auth)):{token:""}
